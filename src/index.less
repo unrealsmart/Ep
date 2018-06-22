@@ -1,0 +1,97 @@
+html,
+body,
+:global(#root) {
+  height: 100%;
+}
+
+:global(.ant-layout) {
+  min-height: 100%;
+}
+
+canvas {
+  display: block;
+}
+
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.globalSpin {
+  width: 100%;
+  margin: 40px 0 !important;
+}
+
+// temp fix for https://github.com/ant-design/ant-design/commit/a1fafb5b727b62cb0be29ce6e9eca8f579d4f8b7
+:global {
+  a {
+    text-decoration: none !important;
+  }
+  .ant-layout {
+    max-height: 100vh;
+    overflow: hidden;
+  }
+  .ant-spin-container {
+    overflow: visible !important;
+  }
+  .ant-layout-header {
+    transition: padding-left 0.2s ease;
+  }
+  .ant-layout-header-callapse {
+    padding-left: 80px !important;
+  }
+  .ant-layout-header-mobile {
+    padding-left: 0 !important;
+  }
+  .vh-100 {
+    height: 100vh;
+    max-height: 100vh;
+  }
+  .overflow-hidden {
+    overflow: hidden;
+  }
+  .overflow-y-auto {
+    overflow-y: auto;
+  }
+  .ant-layout-sider .ant-layout-sider-children {
+    display: flex;
+    flex-flow: column;
+  }
+  .ant-layout > .ant-layout-content {
+    height: 100vh;
+    // padding-top: 64px;
+    overflow: auto;
+    &::-webkit-scrollbar {
+      width: 8px;
+      height: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #ddd;
+      &:hover {
+        background-color: #ccc;
+      }
+    }
+  }
+  // table component
+  .ant-table-body {
+    &::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #ddd;
+      &:hover {
+        background-color: #ccc;
+      }
+    }
+  }
+  // button component
+  .ant-btn-group-lg > .ant-btn, .ant-btn.ant-btn-lg {
+    font-size: 14px !important;
+  }
+  // ant-layout-sider
+  .ant-layout-sider {
+    background-color: white !important;
+  }
+}
