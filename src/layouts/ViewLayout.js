@@ -14,7 +14,7 @@ import SiderMenu from '../components/SiderMenu';
 import NotFound from '../routes/Exception/404';
 import { getRoutes } from '../utils/utils';
 import Authorized from '../utils/Authorized';
-import { getMenuData } from '../common/menu';
+import { getMenuData, formatter } from '../common/menu';
 import logo from '../assets/logo.png';
 
 import styles from './ViewLayout.less';
@@ -121,16 +121,6 @@ class ViewLayout extends React.PureComponent {
         });
       },
     });
-    setTimeout(() => {
-      dispatch({
-        type: 'menu/fetch',
-        callback: () => {
-          this.setState({
-            siderMenuLoading: false,
-          });
-        },
-      });
-    }, 3000)
   }
   componentWillUnmount() {
     unenquireScreen(this.enquireHandler);
@@ -225,7 +215,7 @@ class ViewLayout extends React.PureComponent {
           // If you do not have the Authorized parameter
           // you will be forced to jump to the 403 interface without permission
           Authorized={Authorized}
-          menuData={menuSync.lists}
+          menuData={formatter(menuSync.lists)}
           collapsed={collapsed}
           location={location}
           isMobile={this.state.isMobile}

@@ -78,6 +78,13 @@ export const getRouterData = app => {
     '/admin/message': {
       component: dynamicWrapper(app, ['message'], () => import('../routes/Message/Index')),
     },
+    '/admin/menu': {
+      component: dynamicWrapper(app, [], () => import('../routes/Message/Index')),
+    },
+    '/admin/menu/child': {
+      component: dynamicWrapper(app, [], () => import('../routes/Message/Index')),
+    },
+    //
     '/dashboard/analysis': {
       component: dynamicWrapper(app, ['chart'], () => import('../routes/Dashboard/Analysis')),
     },

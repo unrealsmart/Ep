@@ -12,7 +12,7 @@ export default {
       const response = yield call(queryMenu);
       yield put({
         type: 'save',
-        payload: response,
+        payload: response || [],
       });
       if (callback) callback();
     },

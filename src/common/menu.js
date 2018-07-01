@@ -304,7 +304,7 @@ const menuData = [
 // 注意：
 // 若要通过虚拟机环境或直接使用，修改 parentPath = '/' => parentPath = '/admin/'
 // 此外，相关重定向跳转需要更改到 '/admin/'
-function formatter(data, parentPath = '/admin/', parentAuthority) {
+export function formatter(data, parentPath = '/admin/', parentAuthority) {
   return data.map(item => {
     let { path } = item;
     if (!isUrl(path)) {

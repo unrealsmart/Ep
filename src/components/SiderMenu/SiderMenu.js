@@ -190,7 +190,7 @@ export default class SiderMenu extends PureComponent {
     return this.menus.some(item => key && (item.key === key || item.path === key));
   };
   handleOpenChange = openKeys => {
-    const lastOpenKey = openKeys[openKeys.length - 1];
+    const lastOpenKey = openKeys.length && openKeys[openKeys.length - 1];
     const moreThanOne = openKeys.filter(openKey => this.isMainMenu(openKey)).length > 1;
     this.setState({
       openKeys: moreThanOne ? [lastOpenKey] : [...openKeys],
@@ -205,6 +205,7 @@ export default class SiderMenu extends PureComponent {
       : {
           openKeys,
         };
+    console.log(menuProps)
     // if pathname can't match, use the nearest parent's key
     let selectedKeys = this.getSelectedMenuKeys();
     if (!selectedKeys.length) {
@@ -217,6 +218,34 @@ export default class SiderMenu extends PureComponent {
         tip="获取菜单"
       />
     );
+    const menuContent = () => {
+      if (loading) {
+        return menuSpin;
+      } else if (this.props.menuData.length) {
+        return (
+          <Menu
+            key="Menu"
+            theme="light"
+            mode="inline"
+            // {...menuProps}
+            // onOpenChange={this.handleOpenChange}
+            selectedKeys={selectedKeys}
+            style={{ padding: '16px 0', width: '100%' }}
+          >
+            {this.getNavMenuItems(this.props.menuData)}
+          </Menu>
+        );
+      } else {
+        return (
+          <div style={{ height: '100%', display: 'flex', flexFlow: 'column', alignItems: 'center', justifyContent: 'center' }}>
+            <div>
+              <Icon type="warning" style={{ fontSize: 32, color: '#aaa', marginBottom: 10 }} />
+            </div>
+            <div style={{ color: '#aaa' }}>未取得菜单</div>
+          </div>
+        );
+      }
+    }
     return (
       <Sider
         trigger={null}
@@ -228,25 +257,13 @@ export default class SiderMenu extends PureComponent {
         className={styles.sider}
       >
         <div className={styles.logo} key="logo">
-          <Link to="/">
+          <Link to="/admin">
             <img src={logo} alt="logo" />
             {!collapsed && <h1>好享派</h1>}
           </Link>
         </div>
         <div style={{ height: '100%', overflow: 'auto', borderTop: '1px solid #f5f5f5' }}>
-          {loading ? menuSpin : (
-            <Menu
-              key="Menu"
-              theme="light"
-              mode="inline"
-              {...menuProps}
-              onOpenChange={this.handleOpenChange}
-              selectedKeys={selectedKeys}
-              style={{ padding: '16px 0', width: '100%' }}
-            >
-              {this.getNavMenuItems(this.props.menuData)}
-            </Menu>
-          )}
+          {menuContent()}
         </div>
       </Sider>
     );

@@ -23,8 +23,8 @@ const Exception = ({ className, linkElement = 'a', type, title, desc, img, actio
             createElement(
               linkElement,
               {
-                to: '/',
-                href: '/',
+                to: '/admin',
+                href: '/admin',
               },
               <Button type="primary">返回首页</Button>
             )}
