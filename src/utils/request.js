@@ -64,10 +64,8 @@ export default function request(url, options) {
       };
     }
   }
-  
-  const service = options && options.service ? options.service : 'http://ins.com';
 
-  return fetch(service + url, newOptions)
+  return fetch(window.location.origin + url, newOptions)
     .then(checkStatus)
     .then(response => {
       if (newOptions.method === 'DELETE' || response.status === 204) {
