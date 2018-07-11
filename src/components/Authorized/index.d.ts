@@ -17,7 +17,6 @@ interface Secured {
 export interface AuthorizedRouteProps extends RouteProps {
   authority: authority;
 }
-
 export class AuthorizedRoute extends React.Component<AuthorizedRouteProps, any> {}
 
 interface check {

@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 export interface IFooterToolbarProps {
   extra: React.ReactNode;
   style?: React.CSSProperties;

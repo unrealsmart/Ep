@@ -1,5 +1,5 @@
 import React from 'react';
-import { Axis, Chart, Coord, Geom, Guide, Shape } from 'bizcharts';
+import { Chart, Geom, Axis, Coord, Guide, Shape } from 'bizcharts';
 import autoHeight from '../autoHeight';
 
 const { Arc, Html, Line } = Guide;

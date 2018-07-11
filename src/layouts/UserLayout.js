@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
-import { Link, Redirect, Route, Switch } from 'dva/router';
+import { Link, Redirect, Switch, Route } from 'dva/router';
 import DocumentTitle from 'react-document-title';
 import { Icon } from 'antd';
 import GlobalFooter from '../components/GlobalFooter';
 import styles from './UserLayout.less';
-import logo from '../assets/logo.png';
-import { getRoutes } from '../utils/utils';
+import logo from '../assets/logo.svg';
+import { getRoutes, getPageQuery, getQueryPath } from '../utils/utils';
 
 const links = [
   {
@@ -31,6 +31,14 @@ const copyright = (
   </Fragment>
 );
 
+function getLoginPathWithRedirectPath() {
+  const params = getPageQuery();
+  const { redirect } = params;
+  return getQueryPath('/user/login', {
+    redirect,
+  });
+}
+
 class UserLayout extends React.PureComponent {
   getPageTitle() {
     const { routerData, location } = this.props;
@@ -40,7 +48,7 @@ class UserLayout extends React.PureComponent {
       title = `${routerData[pathname].name} - 轻易应用`;
     }
     return title;
-}
+  }
 
   render() {
     const { routerData, match } = this.props;
@@ -66,7 +74,7 @@ class UserLayout extends React.PureComponent {
                   exact={item.exact}
                 />
               ))}
-              <Redirect exact from="/user" to="/user/login" />
+              <Redirect from="/user" to={getLoginPathWithRedirectPath()} />
             </Switch>
           </div>
           <GlobalFooter links={links} copyright={copyright} />

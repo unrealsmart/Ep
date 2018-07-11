@@ -1,20 +1,21 @@
 import React, { PureComponent } from 'react';
-import { Menu, Icon, Spin, Tag, Dropdown, Avatar, Divider } from 'antd';
+import { Menu, Icon, Spin, Tag, Dropdown, Avatar, Divider, Tooltip } from 'antd';
 import moment from 'moment';
 import groupBy from 'lodash/groupBy';
 import Debounce from 'lodash-decorators/debounce';
 import { Link } from 'dva/router';
-// import NoticeIcon from '../NoticeIcon';
-// import HeaderSearch from '../HeaderSearch';
+import NoticeIcon from '../NoticeIcon';
+import HeaderSearch from '../HeaderSearch';
 import styles from './index.less';
 
 export default class GlobalHeader extends PureComponent {
   componentWillUnmount() {
     this.triggerResizeEvent.cancel();
   }
+
   getNoticeData() {
-    const { notices = [] } = this.props;
-    if (notices.length === 0) {
+    const { notices } = this.props;
+    if (notices == null || notices.length === 0) {
       return {};
     }
     const newNotices = notices.map(notice => {
@@ -43,6 +44,7 @@ export default class GlobalHeader extends PureComponent {
     });
     return groupBy(newNotices, 'type');
   }
+
   toggle = () => {
     const { collapsed, onCollapse } = this.props;
     onCollapse(!collapsed);
@@ -97,9 +99,7 @@ export default class GlobalHeader extends PureComponent {
           type={collapsed ? 'menu-unfold' : 'menu-fold'}
           onClick={this.toggle}
         />
-        
         <div className={styles.right}>
-          {/*
           <HeaderSearch
             className={`${styles.action} ${styles.search}`}
             placeholder="站内搜索"
@@ -151,7 +151,6 @@ export default class GlobalHeader extends PureComponent {
               emptyImage="https://gw.alipayobjects.com/zos/rmsportal/HsIsxMZiWKrNUavQUXqx.svg"
             />
           </NoticeIcon>
-          */}
           {currentUser.name ? (
             <Dropdown overlay={menu}>
               <span className={`${styles.action} ${styles.account}`}>

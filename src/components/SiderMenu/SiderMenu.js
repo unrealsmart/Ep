@@ -57,16 +57,18 @@ export default class SiderMenu extends PureComponent {
       openKeys: this.getDefaultCollapsedSubMenus(props),
     };
   }
-  
+
   componentWillReceiveProps(nextProps) {
     const { location } = this.props;
+    this.menus = nextProps.menuData;
+    this.flatMenuKeys = getFlatMenuKeys(nextProps.menuData);
     if (nextProps.location.pathname !== location.pathname) {
       this.setState({
         openKeys: this.getDefaultCollapsedSubMenus(nextProps),
       });
     }
   }
-  
+
   /**
    * Convert pathname to openKeys
    * /list/search/articles = > ['list','/list/search']
@@ -76,10 +78,10 @@ export default class SiderMenu extends PureComponent {
     const {
       location: { pathname },
     } =
-    props || this.props;
+      props || this.props;
     return getMenuMatchKeys(this.flatMenuKeys, urlToList(pathname));
   }
-  
+
   /**
    * 判断是否是http链接.返回 Link 或 a
    * Judge whether it is http link.return a or Link
@@ -107,8 +109,8 @@ export default class SiderMenu extends PureComponent {
         onClick={
           isMobile
             ? () => {
-              onCollapse(true);
-            }
+                onCollapse(true);
+              }
             : undefined
         }
       >
@@ -117,7 +119,7 @@ export default class SiderMenu extends PureComponent {
       </Link>
     );
   };
-  
+
   /**
    * get SubMenu or Item
    */
@@ -149,7 +151,7 @@ export default class SiderMenu extends PureComponent {
       return <Menu.Item key={item.path}>{this.getMenuItemPath(item)}</Menu.Item>;
     }
   };
-  
+
   /**
    * 获得菜单子节点
    * @memberof SiderMenu
@@ -159,15 +161,15 @@ export default class SiderMenu extends PureComponent {
       return [];
     }
     return menusData
-    .filter(item => item.name && !item.hideInMenu)
-    .map(item => {
-      // make dom
-      const ItemDom = this.getSubMenuOrItem(item);
-      return this.checkPermissionItem(item.authority, ItemDom);
-    })
-    .filter(item => item);
+      .filter(item => item.name && !item.hideInMenu)
+      .map(item => {
+        // make dom
+        const ItemDom = this.getSubMenuOrItem(item);
+        return this.checkPermissionItem(item.authority, ItemDom);
+      })
+      .filter(item => item);
   };
-  
+
   // Get the currently selected menu
   getSelectedMenuKeys = () => {
     const {
@@ -175,7 +177,7 @@ export default class SiderMenu extends PureComponent {
     } = this.props;
     return getMenuMatchKeys(this.flatMenuKeys, urlToList(pathname));
   };
-  
+
   // conversion Path
   // 转化路径
   conversionPath = path => {
@@ -185,7 +187,7 @@ export default class SiderMenu extends PureComponent {
       return `/${path || ''}`.replace(/\/+/g, '/');
     }
   };
-  
+
   // permission to check
   checkPermissionItem = (authority, ItemDom) => {
     const { Authorized } = this.props;
@@ -195,11 +197,11 @@ export default class SiderMenu extends PureComponent {
     }
     return ItemDom;
   };
-  
+
   isMainMenu = key => {
     return this.menus.some(item => key && (item.key === key || item.path === key));
   };
-  
+
   handleOpenChange = openKeys => {
     const lastOpenKey = openKeys[openKeys.length - 1];
     const moreThanOne = openKeys.filter(openKey => this.isMainMenu(openKey)).length > 1;
@@ -207,16 +209,52 @@ export default class SiderMenu extends PureComponent {
       openKeys: moreThanOne ? [lastOpenKey] : [...openKeys],
     });
   };
-  
+
   render() {
-    const { logo, collapsed, onCollapse } = this.props;
+    const { logo, loading, collapsed, onCollapse, menuData } = this.props;
     const { openKeys } = this.state;
     // Don't show popup menu when it is been collapsed
     const menuProps = collapsed
       ? {}
       : {
-        openKeys,
-      };
+          openKeys,
+        };
+    // menu spin
+    const menuSpin = (
+      <Spin
+        style={{ width: '100%', height: '100%', display: 'flex', flexFlow: 'column', alignItems: 'center', justifyContent: 'center' }}
+        indicator={<Icon type="loading" style={{ fontSize: 24, marginBottom: 24 }} spin />}
+        tip="获取菜单"
+      />
+    );
+    const menuContent = () => {
+      if (loading) {
+        return menuSpin;
+      } else if (menuData.length) {
+        return (
+          <Menu
+            key="Menu"
+            theme="light"
+            mode="inline"
+            {...menuProps}
+            onOpenChange={this.handleOpenChange}
+            selectedKeys={selectedKeys}
+            style={{ padding: '16px 0', width: '100%' }}
+          >
+            {this.getNavMenuItems(this.menus)}
+          </Menu>
+        );
+      } else {
+        return (
+          <div style={{ height: '100%', display: 'flex', flexFlow: 'column', alignItems: 'center', justifyContent: 'center' }}>
+            <div>
+              <Icon type="warning" style={{ fontSize: 32, color: '#aaa', marginBottom: 10 }} />
+            </div>
+            <div style={{ color: '#aaa' }}>未取得菜单</div>
+          </div>
+        );
+      }
+    }
     // if pathname can't match, use the nearest parent's key
     let selectedKeys = this.getSelectedMenuKeys();
     if (!selectedKeys.length) {
@@ -233,22 +271,14 @@ export default class SiderMenu extends PureComponent {
         className={styles.sider}
       >
         <div className={styles.logo} key="logo">
-          <Link to="/">
+          <Link to="/admin">
             <img src={logo} alt="logo" />
-            <h1>Ant Design Pro</h1>
+            <h1>轻易技术体验</h1>
           </Link>
         </div>
-        <Menu
-          key="Menu"
-          theme="dark"
-          mode="inline"
-          {...menuProps}
-          onOpenChange={this.handleOpenChange}
-          selectedKeys={selectedKeys}
-          style={{ padding: '16px 0', width: '100%' }}
-        >
-          {this.getNavMenuItems(this.menus)}
-        </Menu>
+        <div style={{ height: '100%', overflow: 'auto', borderTop: '1px solid #f5f5f5' }}>
+          {menuContent()}
+        </div>
       </Sider>
     );
   }

@@ -1,8 +1,8 @@
-import React, { Fragment, PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'dva';
-import { Card, Col, Row, Tooltip } from 'antd';
+import { Row, Col, Card, Tooltip } from 'antd';
 import numeral from 'numeral';
-import { Gauge, Pie, TagCloud, WaterWave } from 'components/Charts';
+import { Pie, WaterWave, Gauge, TagCloud } from 'components/Charts';
 import NumberInfo from 'components/NumberInfo';
 import CountDown from 'components/CountDown';
 import ActiveChart from 'components/ActiveChart';
@@ -25,7 +25,8 @@ const havePermissionAsync = new Promise(resolve => {
 }))
 export default class Monitor extends PureComponent {
   componentDidMount() {
-    this.props.dispatch({
+    const { dispatch } = this.props;
+    dispatch({
       type: 'monitor/fetchTags',
     });
   }

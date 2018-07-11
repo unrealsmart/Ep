@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Tooltip } from 'antd';
+import { Tooltip, Avatar } from 'antd';
 import classNames from 'classnames';
 
 import styles from './index.less';

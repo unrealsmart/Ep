@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 export interface IFieldProps {
   label: React.ReactNode;
   value: React.ReactNode;

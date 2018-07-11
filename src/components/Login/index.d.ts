@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Button from 'antd/lib/button';
-
 export interface LoginProps {
   defaultActiveKey?: string;
   onTabChange?: (key: string) => void;
@@ -12,7 +11,6 @@ export interface TabProps {
   key?: string;
   tab?: React.ReactNode;
 }
-
 export class Tab extends React.Component<TabProps, any> {}
 
 export interface LoginItemProps {

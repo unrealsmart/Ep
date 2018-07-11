@@ -1,4 +1,4 @@
-import React, { createElement, PureComponent } from 'react';
+import React, { PureComponent, createElement } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'antd';
 import styles from './index.less';

@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 export interface INumberInfoProps {
   title?: React.ReactNode | string;
   subTitle?: React.ReactNode | string;

@@ -1,7 +1,6 @@
 import React from 'react';
 import Exception from '../Exception/index';
 import CheckPermissions from './CheckPermissions';
-
 /**
  * 默认不能访问任何页面
  * default is "NULL"
@@ -47,8 +46,8 @@ const authorize = (authority, error) => {
   if (!authority) {
     throw new Error('authority is required');
   }
-  return function decideAuthority(targer) {
-    const component = CheckPermissions(authority, targer, classError || Exception403);
+  return function decideAuthority(target) {
+    const component = CheckPermissions(authority, target, classError || Exception403);
     return checkIsInstantiation(component);
   };
 };

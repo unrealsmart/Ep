@@ -1,4 +1,4 @@
-import {parse} from 'url';
+import { parse } from 'url';
 
 const titles = [
   'Alipay',
@@ -102,7 +102,7 @@ export function fakeList(count) {
       ],
     });
   }
-  
+
   return list;
 }
 
@@ -111,13 +111,13 @@ export function getFakeList(req, res, u) {
   if (!url || Object.prototype.toString.call(url) !== '[object String]') {
     url = req.url; // eslint-disable-line
   }
-  
+
   const params = parse(url, true).query;
-  
+
   const count = params.count * 1 || 20;
-  
+
   const result = fakeList(count);
-  
+
   if (res && res.json) {
     res.json(result);
   } else {

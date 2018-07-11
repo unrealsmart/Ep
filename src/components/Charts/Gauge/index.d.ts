@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 export interface IGaugeProps {
   title: React.ReactNode;
   color?: string;

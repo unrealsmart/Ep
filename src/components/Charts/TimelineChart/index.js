@@ -1,5 +1,5 @@
 import React from 'react';
-import { Axis, Chart, Geom, Legend, Tooltip } from 'bizcharts';
+import { Chart, Tooltip, Geom, Legend, Axis } from 'bizcharts';
 import DataSet from '@antv/data-set';
 import Slider from 'bizcharts-plugin-slider';
 import autoHeight from '../autoHeight';
@@ -44,8 +44,7 @@ export default class TimelineChart extends React.Component {
     });
 
     const dv = ds.createView();
-    dv
-      .source(data)
+    dv.source(data)
       .transform({
         type: 'filter',
         callback: obj => {

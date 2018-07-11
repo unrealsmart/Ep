@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 export interface IMiniProgressProps {
   target: number;
   color?: string;

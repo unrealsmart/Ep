@@ -310,6 +310,7 @@ export function formatter(data, parentPath = '/admin/', parentAuthority) {
     if (!isUrl(path)) {
       path = parentPath + item.path;
     }
+    console.log(item)
     const result = {
       ...item,
       path,
@@ -318,6 +319,7 @@ export function formatter(data, parentPath = '/admin/', parentAuthority) {
     if (item.children) {
       result.children = formatter(item.children, `${parentPath}${item.path}/`, item.authority);
     }
+    console.log(result)
     return result;
   });
 }

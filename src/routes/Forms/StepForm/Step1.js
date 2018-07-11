@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { connect } from 'dva';
-import { Button, Divider, Form, Input, Select } from 'antd';
+import { Form, Input, Button, Select, Divider } from 'antd';
 import { routerRedux } from 'dva/router';
 import styles from './style.less';
 

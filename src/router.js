@@ -1,17 +1,13 @@
 import React from 'react';
-import { Route, routerRedux, Switch } from 'dva/router';
-import { LocaleProvider, Spin } from 'antd';
+import { routerRedux, Route, Switch } from 'dva/router';
+import { LocaleProvider } from 'antd';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
-import dynamic from 'dva/dynamic';
 import { getRouterData } from './common/router';
 import Authorized from './utils/Authorized';
-import styles from './index.less';
+import { getQueryPath } from './utils/utils';
 
 const { ConnectedRouter } = routerRedux;
 const { AuthorizedRoute } = Authorized;
-dynamic.setDefaultLoadingComponent(() => {
-  return <Spin className={styles.globalSpin} />;
-});
 
 function RouterConfig({ history, app }) {
   const routerData = getRouterData(app);
@@ -26,8 +22,9 @@ function RouterConfig({ history, app }) {
             path="/admin"
             render={props => <BasicLayout {...props} />}
             authority={['Admin', 'Admin-Agent', 'Admin-User']}
-            // noMatch={(<div>no match</div>)}
-            redirectPath="/admin/user/login"
+            redirectPath={getQueryPath('/user/login', {
+              redirect: window.location.href,
+            })}
           />
         </Switch>
       </ConnectedRouter>

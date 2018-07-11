@@ -78,6 +78,10 @@ const query = {
   },
   'screen-xl': {
     minWidth: 1200,
+    maxWidth: 1599,
+  },
+  'screen-xxl': {
+    minWidth: 1600,
   },
   'vh-100 overflow-hidden': {},
 };
@@ -92,10 +96,12 @@ class ViewLayout extends React.PureComponent {
     location: PropTypes.object,
     breadcrumbNameMap: PropTypes.object,
   };
+
   state = {
     siderMenuLoading: true,
     isMobile,
   };
+
   getChildContext() {
     const { location, routerData } = this.props;
     return {
@@ -103,6 +109,7 @@ class ViewLayout extends React.PureComponent {
       breadcrumbNameMap: getBreadcrumbNameMap(getMenuData(), routerData),
     };
   }
+
   componentDidMount() {
     this.enquireHandler = enquireScreen(mobile => {
       this.setState({
@@ -122,9 +129,11 @@ class ViewLayout extends React.PureComponent {
       },
     });
   }
+
   componentWillUnmount() {
     unenquireScreen(this.enquireHandler);
   }
+
   getPageTitle() {
     const { routerData, location } = this.props;
     const { pathname } = location;
@@ -141,6 +150,7 @@ class ViewLayout extends React.PureComponent {
     }
     return title;
   }
+
   getBaseRedirect = () => {
     // According to the url parameter to redirect
     // 这里是重定向的,重定向到 url 的 redirect 参数所示地址
@@ -161,37 +171,46 @@ class ViewLayout extends React.PureComponent {
     }
     return redirect;
   };
+
   handleMenuCollapse = collapsed => {
-    this.props.dispatch({
+    const { dispatch } = this.props;
+    dispatch({
       type: 'global/changeLayoutCollapsed',
       payload: collapsed,
     });
   };
+
   handleNoticeClear = type => {
     message.success(`清空了${type}`);
-    this.props.dispatch({
+    const { dispatch } = this.props;
+    dispatch({
       type: 'global/clearNotices',
       payload: type,
     });
   };
+
   handleMenuClick = ({ key }) => {
+    const { dispatch } = this.props;
     if (key === 'triggerError') {
-      this.props.dispatch(routerRedux.push('/admin/exception/trigger'));
+      dispatch(routerRedux.push('/admin/exception/trigger'));
       return;
     }
     if (key === 'logout') {
-      this.props.dispatch({
+      dispatch({
         type: 'login/logout',
       });
     }
   };
+
   handleNoticeVisibleChange = visible => {
+    const { dispatch } = this.props;
     if (visible) {
-      this.props.dispatch({
+      dispatch({
         type: 'global/fetchNotices',
       });
     }
   };
+
   render() {
     const { siderMenuLoading } = this.state;
     const {
@@ -204,6 +223,8 @@ class ViewLayout extends React.PureComponent {
       location,
       menuSync,
     } = this.props;
+    const menuSyncLists = formatter(menuSync.lists);
+    const { isMobile: mb } = this.state;
     const bashRedirect = this.getBaseRedirect();
     const layout = (
       <Layout>
@@ -215,17 +236,17 @@ class ViewLayout extends React.PureComponent {
           // If you do not have the Authorized parameter
           // you will be forced to jump to the 403 interface without permission
           Authorized={Authorized}
-          menuData={formatter(menuSync.lists)}
+          menuData={menuSyncLists}
           collapsed={collapsed}
           location={location}
-          isMobile={this.state.isMobile}
+          isMobile={mb}
           onCollapse={this.handleMenuCollapse}
         />
         <Layout className="vh-100">
           <Header
             style={{ padding: '0 0 0 256px', position: 'fixed', left: 0, width: '100%', zIndex: 9 }}
             className={`${collapsed ? 'ant-layout-header-callapse' : ''} ${
-              this.state.isMobile ? 'ant-layout-header-mobile' : ''
+              mb ? 'ant-layout-header-mobile' : ''
             }`}
           >
             <GlobalHeader
@@ -234,7 +255,7 @@ class ViewLayout extends React.PureComponent {
               fetchingNotices={fetchingNotices}
               notices={notices}
               collapsed={collapsed}
-              isMobile={this.state.isMobile}
+              isMobile={mb}
               onNoticeClear={this.handleNoticeClear}
               onCollapse={this.handleMenuCollapse}
               onMenuClick={this.handleMenuClick}
@@ -301,7 +322,7 @@ class ViewLayout extends React.PureComponent {
   }
 }
 
-export default connect(({ user, global, menu, loading }) => ({
+export default connect(({ user, global = {}, menu, loading }) => ({
   currentUser: user.currentUser,
   collapsed: global.collapsed,
   fetchingNotices: loading.effects['global/fetchNotices'],

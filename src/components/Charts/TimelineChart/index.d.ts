@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 export interface ITimelineChartProps {
   data: Array<{
     x: string;

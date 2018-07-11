@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Button, Card, Spin } from 'antd';
+import { Button, Spin, Card } from 'antd';
 import { connect } from 'dva';
 import styles from './style.less';
 
@@ -10,11 +10,13 @@ export default class TriggerException extends PureComponent {
   state = {
     isloading: false,
   };
+
   triggerError = code => {
     this.setState({
       isloading: true,
     });
-    this.props.dispatch({
+    const { dispatch } = this.props;
+    dispatch({
       type: 'error/query',
       payload: {
         code,
@@ -23,9 +25,10 @@ export default class TriggerException extends PureComponent {
   };
 
   render() {
+    const { isloading } = this.state;
     return (
       <Card>
-        <Spin spinning={this.state.isloading} wrapperClassName={styles.trigger}>
+        <Spin spinning={isloading} wrapperClassName={styles.trigger}>
           <Button type="danger" onClick={() => this.triggerError(401)}>
             触发401
           </Button>

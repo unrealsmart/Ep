@@ -18,7 +18,7 @@ const { Tab, UserName, Password, /* Mobile, Captcha, */ Submit } = Login;
 export default class LoginPage extends Component {
   state = {
     type: 'account',
-    // autoLogin: true,
+    autoLogin: true,
   };
 
   onTabChange = type => {
@@ -27,8 +27,9 @@ export default class LoginPage extends Component {
 
   handleSubmit = (err, values) => {
     const { type } = this.state;
+    const { dispatch } = this.props;
     if (!err) {
-      this.props.dispatch({
+      dispatch({
         type: 'login/login',
         payload: {
           ...values,
@@ -38,11 +39,11 @@ export default class LoginPage extends Component {
     }
   };
 
-  // changeAutoLogin = e => {
-  //   this.setState({
-  //     autoLogin: e.target.checked,
-  //   });
-  // };
+  changeAutoLogin = e => {
+    this.setState({
+      autoLogin: e.target.checked,
+    });
+  };
 
   renderMessage = content => {
     return <Alert style={{ marginBottom: 24 }} message={content} type="error" showIcon />;
@@ -50,7 +51,7 @@ export default class LoginPage extends Component {
 
   render() {
     const { login, submitting } = this.props;
-    const { type } = this.state;
+    const { type, autoLogin } = this.state;
     return (
       <div className={styles.main}>
         <Login defaultActiveKey={type} onTabChange={this.onTabChange} onSubmit={this.handleSubmit}>
@@ -72,7 +73,7 @@ export default class LoginPage extends Component {
             <Captcha name="captcha" />
           </Tab>
           <div>
-            <Checkbox checked={this.state.autoLogin} onChange={this.changeAutoLogin}>
+            <Checkbox checked={autoLogin} onChange={this.changeAutoLogin}>
               自动登录
             </Checkbox>
             <a style={{ float: 'right' }} href="">

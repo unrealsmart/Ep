@@ -70,6 +70,8 @@ export default class Article extends PureComponent {
       dataIndex: 'id',
     }];
     
+    console.log(this)
+    
     return (
       <PageHeaderLayout title="博客">
         <Card title="文章" bordered={false}>

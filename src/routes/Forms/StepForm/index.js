@@ -1,5 +1,5 @@
-import React, { Fragment, PureComponent } from 'react';
-import { Redirect, Route, Switch } from 'dva/router';
+import React, { PureComponent, Fragment } from 'react';
+import { Route, Redirect, Switch } from 'dva/router';
 import { Card, Steps } from 'antd';
 import PageHeaderLayout from '../../../layouts/PageHeaderLayout';
 import NotFound from '../../Exception/404';

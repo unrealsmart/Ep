@@ -1,5 +1,5 @@
-const {spawn} = require('child_process');
-const {kill} = require('cross-port-killer');
+const { spawn } = require('child_process');
+const { kill } = require('cross-port-killer');
 
 const env = Object.create(process.env);
 env.BROWSER = 'none';

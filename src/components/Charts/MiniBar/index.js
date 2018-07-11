@@ -1,5 +1,5 @@
 import React from 'react';
-import { Chart, Geom, Tooltip } from 'bizcharts';
+import { Chart, Tooltip, Geom } from 'bizcharts';
 import autoHeight from '../autoHeight';
 import styles from '../index.less';
 
