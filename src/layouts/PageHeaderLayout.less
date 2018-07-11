@@ -4,8 +4,41 @@
   margin: 24px 24px 0;
 }
 
+.pageHeaderLayoutRoot {
+  margin: -24px -24px 0;
+}
+
+@media screen and (max-width: @screen-xl) and (min-width: @screen-lg) {
+  .pageHeaderLayoutRoot {
+    margin: -24px -24px 0;
+  }
+}
+@media screen and (max-width: @screen-lg) {
+  .pageHeaderLayoutRoot {
+    margin: -24px -24px 0;
+  }
+}
+@media screen and (max-width: @screen-md) {
+  .content {
+    margin: 24px 12px 0;
+  }
+  .pageHeaderLayoutRoot {
+    margin: -24px 0 0;
+  }
+}
 @media screen and (max-width: @screen-sm) {
   .content {
-    margin: 24px 0 0;
+    margin: 24px 12px 0;
+  }
+  .pageHeaderLayoutRoot {
+    margin: -24px 0 0;
+  }
+}
+@media screen and (max-width: @screen-xs) {
+  .content {
+    margin: 24px 12px 0;
+  }
+  .pageHeaderLayoutRoot {
+    margin: -24px 0 0;
   }
 }

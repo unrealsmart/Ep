@@ -84,6 +84,25 @@ export const getRouterData = app => {
     '/admin/menu/child': {
       component: dynamicWrapper(app, [], () => import('../routes/Message/Index')),
     },
+    '/admin/update-log': {
+      component: dynamicWrapper(app, [], () => import('../routes/Update/Logs')),
+    },
+    '/admin/haa-update-log': {
+      component: dynamicWrapper(app, [], () => import('../routes/Update/HaaLogs')),
+    },
+    
+    // Blog
+    '/admin/blog/category': {
+      component: dynamicWrapper(app, ['blog'], () => import('../routes/Blog/Category')),
+    },
+    '/admin/blog/subCategory': {
+      component: dynamicWrapper(app, ['blog'], () => import('../routes/Blog/SubCategory')),
+    },
+    '/admin/blog/article': {
+      component: dynamicWrapper(app, ['blog'], () => import('../routes/Blog/Article')),
+    },
+    
+    
     //
     '/dashboard/analysis': {
       component: dynamicWrapper(app, ['chart'], () => import('../routes/Dashboard/Analysis')),

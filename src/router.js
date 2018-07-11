@@ -25,7 +25,7 @@ function RouterConfig({ history, app }) {
           <AuthorizedRoute
             path="/admin"
             render={props => <BasicLayout {...props} />}
-            authority={['admin', 'user']}
+            authority={['Admin', 'Admin-Agent', 'Admin-User']}
             // noMatch={(<div>no match</div>)}
             redirectPath="/admin/user/login"
           />

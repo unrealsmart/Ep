@@ -65,7 +65,8 @@ export default function request(url, options) {
     }
   }
 
-  return fetch(window.location.origin + url, newOptions)
+  // return fetch(window.location.origin + url, newOptions)
+  return fetch(`http://ins.com${url}`, newOptions)
     .then(checkStatus)
     .then(response => {
       if (newOptions.method === 'DELETE' || response.status === 204) {

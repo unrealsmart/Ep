@@ -104,7 +104,7 @@ export default class PageHeader extends PureComponent {
         {createElement(
           linkElement,
           {
-            [linkElement === 'a' ? 'href' : 'to']: '/',
+            [linkElement === 'a' ? 'href' : 'to']: '/admin',
           },
           '首页'
         )}
@@ -123,6 +123,7 @@ export default class PageHeader extends PureComponent {
   conversionBreadcrumbList = () => {
     const { breadcrumbList, breadcrumbSeparator } = this.props;
     const { routes, params, routerLocation, breadcrumbNameMap } = this.getBreadcrumbProps();
+    console.log(this.getBreadcrumbProps())
     if (breadcrumbList && breadcrumbList.length) {
       return this.conversionFromProps();
     }
